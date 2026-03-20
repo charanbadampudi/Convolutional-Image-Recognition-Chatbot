@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![NeuralVision AI Banner](https://via.placeholder.com/1200x300/0066FF/FFFFFF?text=NeuralVision+AI+Enterprise)
-
 **A Professional, Production-Ready Visual AI Chatbot with Enterprise-Grade Features**
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
