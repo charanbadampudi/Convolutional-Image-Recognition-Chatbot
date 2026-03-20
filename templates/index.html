@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuralVision AI | Enterprise Visual Intelligence Platform</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Socket.io -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+    <link rel="stylesheet" href="/static/css/responsive.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loader-3d">
+                <div class="cube">
+                    <div class="cube-face front"></div>
+                    <div class="cube-face back"></div>
+                    <div class="cube-face right"></div>
+                    <div class="cube-face left"></div>
+                    <div class="cube-face top"></div>
+                    <div class="cube-face bottom"></div>
+                </div>
+            </div>
+            <h2 class="gradient-text">NeuralVision AI</h2>
+            <p class="loading-subtitle">Enterprise Visual Intelligence</p>
+            <div class="loading-progress-container">
+                <div class="loading-progress-bar" id="loadingProgress"></div>
+            </div>
+            <div class="loading-status" id="loadingStatus">Initializing neural networks...</div>
+            <div class="loading-percentage" id="loadingPercentage">0%</div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app" id="app">
+        <!-- 3D Background -->
+        <canvas id="bgCanvas"></canvas>
+
+        <!-- Floating Orbs -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+
+        <!-- Header -->
+        <header class="header glass">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>Neural<span>Vision</span></h1>
+                        <span class="badge">AI v2.0</span>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="#" class="nav-item active" data-view="dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="history">
+                        <i class="fas fa-history"></i>
+                        <span>History</span>
+                    </a>
+                    <a href="#" class="nav-item" data-view="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+            </div>
+
+            <div class="header-right">
+                <div class="status-indicator">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">System Online</span>
+                </div>
+
+                <div class="user-menu">
+                    <button class="user-menu-btn" id="userMenuBtn">
+                        <div class="avatar">
+                            <img src="https://ui-avatars.com/api/?name=Alex+Morgan&background=0066FF&color=fff&size=40" alt="User">
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Alex Morgan</span>
+                            <span class="user-role">Enterprise Admin</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="#"><i class="fas fa-shield-alt"></i> Security</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+            <!-- Left Sidebar -->
+            <aside class="sidebar left-sidebar glass">
+                <div class="sidebar-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Image Upload
+                    </h3>
+
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+                        <div class="upload-content">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h4>Drop images here</h4>
+                            <p>or <span class="browse-text">browse files</span></p>
+                            <div class="upload-info">
+                                <span>PNG, JPG, GIF up to 50MB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-uploads" id="recentUploads">
+                        <h4>Recent Uploads</h4>
+                        <div class="upload-list" id="uploadList">
+                            <!-- Uploads will appear here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-pie"></i>
+                        Quick Stats
+                    </h3>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalImages">247</span>
+                                <span class="stat-label">Images</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="avgTime">0.3s</span>
+                                <span class="stat-label">Avg Time</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="accuracy">98.5%</span>
+                                <span class="stat-label">Accuracy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Welcome Section -->
+                <div class="welcome-section glass" id="welcomeSection">
+                    <div class="welcome-content">
+                        <h2 class="gradient-text">Welcome to NeuralVision AI</h2>
+                        <p>Upload an image to start exploring the future of visual intelligence</p>
+                        <button class="primary-btn" id="uploadBtn">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            Upload Image
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Image Workspace -->
+                <div class="workspace" id="workspace" style="display: none;">
+                    <!-- Toolbar -->
+                    <div class="workspace-toolbar glass">
+                        <div class="toolbar-group">
+                            <button class="tool-btn" id="zoomInBtn" title="Zoom In">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button class="tool-btn" id="zoomOutBtn" title="Zoom Out">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                            <button class="tool-btn" id="resetZoomBtn" title="Reset Zoom">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+
+                        <div class="toolbar-group">
+                            <button class="tool-btn" id="rotateLeftBtn" title="Rotate Left">
+                                <i class="fas fa-undo-alt"></i>
+                            </button>
+                            <button class="tool-btn" id="rotateRightBtn" title="Rotate Right">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                        </div>
+
+                        <div class="toolbar-group">
+                            <button class="tool-btn" id="cropBtn" title="Crop">
+                                <i class="fas fa-crop-alt"></i>
+                            </button>
+                            <button class="tool-btn" id="annotateBtn" title="Annotate">
+                                <i class="fas fa-pen"></i>
+                            </button>
+                        </div>
+
+                        <div class="toolbar-group">
+                            <button class="tool-btn" id="downloadBtn" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="tool-btn" id="shareBtn" title="Share">
+                                <i class="fas fa-share-alt"></i>
+                            </button>
+                        </div>
+
+                        <div class="image-info">
+                            <span id="imageDimensions">1920x1080</span>
+                            <span id="imageSize">2.4 MB</span>
+                        </div>
+                    </div>
+
+                    <!-- Image Viewport -->
+                    <div class="image-viewport">
+                        <div class="zoom-container" id="zoomContainer">
+                            <img id="activeImage" class="active-image" src="" alt="Active Image">
+                            <canvas id="annotationCanvas" class="annotation-canvas"></canvas>
+                            <div id="detectionOverlay" class="detection-overlay"></div>
+                        </div>
+
+                        <!-- Navigator -->
+                        <div class="image-navigator" id="imageNavigator">
+                            <div class="navigator-preview" id="navigatorPreview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Results -->
+                    <div class="analysis-results glass">
+                        <div class="results-tabs">
+                            <button class="result-tab active" data-tab="detections">
+                                <i class="fas fa-search"></i>
+                                Detections
+                                <span class="tab-badge" id="detectionCount">0</span>
+                            </button>
+                            <button class="result-tab" data-tab="analysis">
+                                <i class="fas fa-chart-pie"></i>
+                                Analysis
+                            </button>
+                            <button class="result-tab" data-tab="metadata">
+                                <i class="fas fa-info-circle"></i>
+                                Metadata
+                            </button>
+                            <button class="result-tab" data-tab="insights">
+                                <i class="fas fa-lightbulb"></i>
+                                Insights
+                            </button>
+                        </div>
+
+                        <div class="results-content" id="resultsContent">
+                            <!-- Results appear here -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar - AI Assistant -->
+            <aside class="sidebar right-sidebar glass">
+                <div class="assistant-header">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI Assistant</h3>
+                    <span class="status-badge">Online</span>
+                </div>
+
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Welcome Message -->
+                        <div class="message ai">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-header">
+                                    <span class="message-sender">NeuralVision AI</span>
+                                    <span class="message-time">Just now</span>
+                                </div>
+                                <div class="message-body">
+                                    👋 Hello! I'm your AI visual assistant. Upload an image and I can:
+                                    <ul class="features-list">
+                                        <li><i class="fas fa-check"></i> Describe the image</li>
+                                        <li><i class="fas fa-check"></i> Detect objects</li>
+                                        <li><i class="fas fa-check"></i> Answer questions</li>
+                                        <li><i class="fas fa-check"></i> Analyze composition</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <button class="quick-action" data-query="Describe this image">
+                            <i class="fas fa-pen-fancy"></i>
+                            <span>Describe</span>
+                        </button>
+                        <button class="quick-action" data-query="Detect all objects">
+                            <i class="fas fa-search"></i>
+                            <span>Detect</span>
+                        </button>
+                        <button class="quick-action" data-query="What colors are present?">
+                            <i class="fas fa-palette"></i>
+                            <span>Colors</span>
+                        </button>
+                        <button class="quick-action" data-query="Analyze the mood">
+                            <i class="fas fa-smile"></i>
+                            <span>Mood</span>
+                        </button>
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="chat-input-area">
+                        <div class="input-wrapper">
+                            <textarea 
+                                class="chat-input" 
+                                id="chatInput" 
+                                placeholder="Ask about the image..."
+                                rows="1"
+                            ></textarea>
+                            <div class="input-actions">
+                                <button class="input-action" id="voiceBtn">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <button class="send-btn" id="sendBtn" disabled>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Suggestions -->
+                        <div class="suggestions" id="suggestions">
+                            <span class="suggestion-label">Try:</span>
+                            <div class="suggestion-chips">
+                                <span class="chip">What's in this image?</span>
+                                <span class="chip">How many people?</span>
+                                <span class="chip">Detect text</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <!-- Share Modal -->
+        <div class="modal" id="shareModal">
+            <div class="modal-content glass">
+                <div class="modal-header">
+                    <h3>Share Analysis</h3>
+                    <button class="modal-close"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="share-options">
+                        <button class="share-option">
+                            <i class="fab fa-slack"></i>
+                            <span>Slack</span>
+                        </button>
+                        <button class="share-option">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email</span>
+                        </button>
+                        <button class="share-option">
+                            <i class="fas fa-link"></i>
+                            <span>Copy Link</span>
+                        </button>
+                        <button class="share-option">
+                            <i class="fab fa-microsoft"></i>
+                            <span>Teams</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn">Cancel</button>
+                    <button class="primary-btn">Share</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/threeBackground.js"></script>
+    <script src="/static/js/uiManager.js"></script>
+    <script src="/static/js/imageProcessor.js"></script>
+    <script src="/static/js/chatbot.js"></script>
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

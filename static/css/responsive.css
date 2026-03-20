@@ -1,0 +1,398 @@
+/* ========================================
+   NeuralVision AI - Responsive Design
+   ======================================== */
+
+/* Large Desktop (1400px and above) */
+@media (min-width: 1400px) {
+    .dashboard {
+        grid-template-columns: 350px 1fr 350px;
+    }
+    
+    .welcome-content h2 {
+        font-size: 3rem;
+    }
+}
+
+/* Desktop (1200px to 1399px) */
+@media (max-width: 1399px) {
+    :root {
+        --sidebar-width: 300px;
+    }
+    
+    .nav-item span {
+        display: none;
+    }
+    
+    .nav-item i {
+        font-size: 1.2rem;
+    }
+}
+
+/* Laptop (1024px to 1199px) */
+@media (max-width: 1199px) {
+    .dashboard {
+        grid-template-columns: 280px 1fr 280px;
+    }
+    
+    .user-info {
+        display: none;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablet Landscape (768px to 1023px) */
+@media (max-width: 1023px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    
+    .sidebar-left,
+    .sidebar-right {
+        display: none;
+    }
+    
+    .main-content {
+        height: 100%;
+    }
+    
+    .header-left {
+        gap: var(--space-4);
+    }
+    
+    .nav-menu {
+        display: none;
+    }
+    
+    .status-indicator {
+        display: none;
+    }
+    
+    .workspace-toolbar {
+        flex-wrap: wrap;
+    }
+    
+    .toolbar-group {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .image-info {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+    }
+}
+
+/* Tablet Portrait (480px to 767px) */
+@media (max-width: 767px) {
+    :root {
+        --header-height: 4rem;
+        --space-4: 0.75rem;
+    }
+    
+    .header {
+        margin: var(--space-2);
+        padding: 0 var(--space-3);
+    }
+    
+    .logo-text h1 {
+        font-size: 1.2rem;
+    }
+    
+    .badge {
+        display: none;
+    }
+    
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .user-menu-btn {
+        padding: var(--space-1);
+    }
+    
+    .avatar {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .welcome-content h2 {
+        font-size: 2rem;
+    }
+    
+    .welcome-content p {
+        font-size: 1rem;
+    }
+    
+    .quick-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .toast {
+        min-width: 250px;
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+    
+    .share-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile (320px to 479px) */
+@media (max-width: 479px) {
+    .header {
+        padding: 0 var(--space-2);
+    }
+    
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+    
+    .logo-text h1 {
+        font-size: 1rem;
+    }
+    
+    .avatar {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .welcome-content {
+        padding: var(--space-4);
+    }
+    
+    .welcome-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .primary-btn {
+        padding: var(--space-2) var(--space-6);
+        font-size: 0.9rem;
+    }
+    
+    .workspace-toolbar {
+        padding: var(--space-2);
+    }
+    
+    .tool-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .image-info {
+        font-size: 0.8rem;
+    }
+    
+    .results-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .result-tab {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .chat-messages {
+        padding: var(--space-2);
+    }
+    
+    .message-content {
+        max-width: 90%;
+    }
+    
+    .toast {
+        min-width: 200px;
+        max-width: 280px;
+        margin: 0 var(--space-2);
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --glass-bg: rgba(0, 0, 0, 0.3);
+        --glass-border: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .glass {
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid white;
+    }
+    
+    .gradient-text {
+        -webkit-text-fill-color: white;
+        background: none;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .header,
+    .sidebar-left,
+    .sidebar-right,
+    .workspace-toolbar,
+    .image-navigator,
+    .quick-actions,
+    .chat-input-area {
+        display: none !important;
+    }
+    
+    .main-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .active-image {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .tool-btn,
+    .quick-action,
+    .chip,
+    .nav-item {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .upload-area {
+        padding: var(--space-12) var(--space-4);
+    }
+    
+    .chat-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+    }
+}
+
+/* Landscape Orientation */
+@media (orientation: landscape) and (max-height: 600px) {
+    .dashboard {
+        grid-template-rows: 1fr;
+    }
+    
+    .welcome-section {
+        padding: var(--space-4);
+    }
+    
+    .welcome-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: var(--space-2);
+    }
+    
+    .welcome-content p {
+        margin-bottom: var(--space-4);
+    }
+    
+    .analysis-results {
+        max-height: 150px;
+    }
+}
+
+/* Foldable Devices */
+@media (spanning: single-fold-vertical) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .main-content {
+        grid-column: span 1;
+    }
+}
+
+/* Ultrawide Monitors */
+@media (min-width: 2000px) {
+    :root {
+        --sidebar-width: 400px;
+    }
+    
+    .dashboard {
+        max-width: 2000px;
+        margin: 0 auto;
+    }
+    
+    html {
+        font-size: 18px;
+    }
+}
+
+/* Retina Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .avatar img,
+    .upload-item img {
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Loading States for Slow Connections */
+@media (prefers-reduced-data: reduce) {
+    .bg-canvas {
+        display: none;
+    }
+    
+    .orb {
+        opacity: 0.2;
+    }
+}
+
+/* Accessibility - Focus Visible */
+:focus-visible {
+    outline: 3px solid var(--primary-500);
+    outline-offset: 2px;
+}
+
+/* Screen Reader Only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+    .message.user {
+        flex-direction: row;
+    }
+    
+    .image-navigator {
+        right: auto;
+        left: var(--space-4);
+    }
+    
+    .toolbar-group:last-child {
+        margin-left: 0;
+        margin-right: auto;
+    }
+}
