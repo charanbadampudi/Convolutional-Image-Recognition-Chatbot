@@ -1,6 +1,3 @@
-# 📖 Complete README.md for NeuralVision AI
-
-```markdown
 # 🧠 NeuralVision AI - Enterprise Visual Intelligence Platform
 
 <div align="center">
